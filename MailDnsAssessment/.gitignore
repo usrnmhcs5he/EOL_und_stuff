@@ -1,0 +1,7 @@
+# Real domain lists are customer data and are never committed.
+domains.txt
+
+# Reports
+output/*.json
+output/*.csv
+output/*.md
