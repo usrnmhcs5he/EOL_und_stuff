@@ -1,0 +1,5 @@
+# Copy to domains.txt (git-ignored) and replace with the domains to assess.
+# One domain per line; '#' starts a comment. Only reserved example names belong here.
+example.com
+example.net
+example.org   # inline comments are allowed
