@@ -1,4 +1,7 @@
 # EOL_und_stuff
+
+[![Tests](https://github.com/usrnmhcs5he/EOL_und_stuff/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usrnmhcs5he/EOL_und_stuff/actions/workflows/tests.yml)
+
 bunch of tools to help with SMTP and email service/protection stack migrations
 
 ## Tools

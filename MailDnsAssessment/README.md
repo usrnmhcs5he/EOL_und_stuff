@@ -1,5 +1,7 @@
 # Mail DNS and authentication assessment
 
+[![Tests](https://github.com/usrnmhcs5he/EOL_und_stuff/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/usrnmhcs5he/EOL_und_stuff/actions/workflows/tests.yml)
+
 Read-only PowerShell tool that assesses, for a list of domains, every DNS and
 mail-authentication record that matters when a third-party email security gateway
 is replaced by Exchange Online Protection (EOP) / Microsoft Defender for Office 365.
