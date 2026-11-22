@@ -1,4 +1,5 @@
-# Runs the MailDnsAssessment Pester tests on every push.
+# Runs the MailDnsAssessment Pester tests on every push, under
+# Windows PowerShell 5.1 and under PowerShell 7.
 # The tests use fixtures only and make no network calls.
 name: Tests
 
@@ -9,26 +10,29 @@ on:
 permissions:
   contents: read
 
+env:
+  TEST_COMMAND: |
+    "PowerShell $($PSVersionTable.PSVersion)"
+    Import-Module Pester
+    "Pester $((Get-Module Pester).Version)"
+    $result = Invoke-Pester -Path .\MailDnsAssessment\tests -PassThru
+    "Total: $($result.TotalCount)  Passed: $($result.PassedCount)  Failed: $($result.FailedCount)"
+    if ($result.TotalCount -eq 0) { Write-Error 'No tests were found.'; exit 1 }
+    if ($result.FailedCount -gt 0) { exit 1 }
+
 jobs:
   pester:
-    name: Pester (${{ matrix.shell }})
+    name: Pester
     runs-on: windows-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        # powershell = Windows PowerShell 5.1, pwsh = PowerShell 7
-        shell: [powershell, pwsh]
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - name: Run Pester tests
-        shell: ${{ matrix.shell }}
-        run: |
-          "PowerShell $($PSVersionTable.PSVersion)"
-          Import-Module Pester
-          "Pester $((Get-Module Pester).Version)"
-          $result = Invoke-Pester -Path .\MailDnsAssessment\tests -PassThru
-          "Total: $($result.TotalCount)  Passed: $($result.PassedCount)  Failed: $($result.FailedCount)"
-          if ($result.TotalCount -eq 0) { Write-Error 'No tests were found.'; exit 1 }
-          if ($result.FailedCount -gt 0) { exit 1 }
+      - name: Tests under Windows PowerShell 5.1
+        shell: powershell
+        run: Invoke-Expression $env:TEST_COMMAND
+
+      - name: Tests under PowerShell 7
+        if: always()
+        shell: pwsh
+        run: Invoke-Expression $env:TEST_COMMAND
