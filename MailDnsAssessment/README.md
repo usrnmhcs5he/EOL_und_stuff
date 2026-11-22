@@ -293,6 +293,10 @@ whose syntax differs between the two versions.
 Invoke-Pester -Path .\MailDnsAssessment\tests
 ```
 
+The same command runs on GitHub on every push, once under Windows PowerShell 5.1 and once
+under PowerShell 7 (`.github/workflows/tests.yml` in the repository root). A failed test
+marks the commit and its pull request as failed.
+
 | File | Covers |
 | --- | --- |
 | `Parsers.Tests.ps1` | SPF, DMARC, tag-value and MTA-STS policy parsers; host pattern matching; classifiers. |
